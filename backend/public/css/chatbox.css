@@ -1,0 +1,17 @@
+body {
+    height: 400px;
+    width: 500px;
+    background: transparent;
+
+    font-family: sans-serif;
+    display: grid;
+}
+
+p {
+    margin: 0px;
+    margin-bottom: 4px;
+}
+
+.message {
+    color: white;
+}
