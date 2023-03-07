@@ -1,10 +1,45 @@
 const { Client } = require('tmi.js');
-const api = require('../api');
+const api = require('../api/api');
+const eventSub = require('../api/eventSub');
+const channel = require('../config.json').channel;
+
+const bits = {
+    1: 0,
+    100: 1,
+    1000: 2,
+    10000: 3,
+    100000: 4,
+    1000000: 5,
+    1250000: 6,
+    1500000: 7,
+    1750000: 8,
+    200000: 9,
+    2000000: 10,
+    25000: 11,
+    2500000: 12,
+    300000: 13,
+    3000000: 14,
+    3500000: 15,
+    400000: 16,
+    4000000: 17,
+    4500000: 18,
+    5000: 19,
+    50000: 20,
+    500000: 21,
+    5000000: 22,
+    600000: 23,
+    700000: 24,
+    75000: 25,
+    800000: 26,
+    900000: 27
+}
 
 module.exports = class extends Client {
     constructor() {
-        super({ channels: ['yellowy___', 'julia5e'] });
+        super({ channels: [channel] });
         this.api = api;
+        this.events = new eventSub(this);
+
         this.ids = {};
         this.globalBadges = {};
         this.channelBadges = {};
@@ -60,20 +95,27 @@ module.exports = class extends Client {
         if(this.channelBadges[channel] == null) {
             for (const key in badges) {
                 let i = Number(badges[key]);
+
+                if(key === 'bits') i = bits[i];
+                else if(i != 0) i--;
+
                 let versions = this.globalBadges[key];
-                if(i != 0) i--;
                 urls.push(versions[i].image_url_1x);
             }
         } else {
             for (const key in badges) {
                 let i = Number(badges[key]);
                 if(this.channelBadges[channel][key] == null) {
+                    if(key === 'bits') i = bits[i];
+                    else if(i != 0) i--;
+
                     let versions = this.globalBadges[key];
-                    if(i != 0) i--;
                     urls.push(versions[i].image_url_1x);
                 } else {
+                   if(key === 'bits') i = bits[i];
+                    else if(i != 0) i--;
+                    
                     let versions = this.channelBadges[channel][key];
-                    if(i != 0) i--;
                     urls.push(versions[i].image_url_1x);
                 }
             }
