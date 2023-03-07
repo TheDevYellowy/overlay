@@ -38,8 +38,11 @@ app.get('/api', async (req, res) => {
 
 
     json.token = tokens;
-    fs.writeFileSync(`../config.json`, json);
-    res.redirect('https://twitch.tv/');
+
+    console.log({ tokens })
+
+    fs.writeFileSync(`./config.json`, JSON.stringify(json));
+    res.redirect(`https://twitch.tv/moderator/${json.channel}`);
 })
 
 app.listen(80, () => console.log('listening'));

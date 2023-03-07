@@ -2,6 +2,7 @@ const { Client } = require('tmi.js');
 const api = require('../api/api');
 const eventSub = require('../api/eventSub');
 const channel = require('../config.json').channel;
+const { WebSocket, WebSocketServer } = require('ws')
 
 const bits = {
     1: 0,
@@ -43,6 +44,14 @@ module.exports = class extends Client {
         this.ids = {};
         this.globalBadges = {};
         this.channelBadges = {};
+
+        this.wss = new WebSocketServer({ port: 2020 });
+        this.ws = {
+            /** @type {WebSocket | null} */
+            message: null,
+            /** @type {WebSocket | null} */
+            alerts: null
+        }
     }
 
     /**

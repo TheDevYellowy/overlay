@@ -43,12 +43,12 @@ async function post(url, headers, data) {
         post(url, headers, data);
     }
 
-    return fuck.status;
+    return fuck;
 }
 
 async function getAccessToken() {
     console.log(`Please click on the link below, whatever was tried to run will try again in 15 seconds. If it succeeded you'll be redirected to twitch`);
-    console.log(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${json.client_id}&redirect_uri=${encodeURIComponent(`localhost/api`)}&scope=moderator%3Aread%3Afollowers`);
+    console.log(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${json.client_id}&redirect_uri=${encodeURIComponent(`http://localhost/api`)}&scope=moderator%3Aread%3Afollowers`);
 }
 
 module.exports = {get, post}
