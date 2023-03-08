@@ -76,11 +76,11 @@ function startup() {
         }
     }
     try {
-        require('./config.json');
+        require(`${process.cwd()}/config.json`);
     } catch (_) {
-        fs.writeFileSync('./config.json', JSON.stringify(baseConfig, null, 4));
+        fs.writeFileSync(`${process.cwd()}/config.json`, JSON.stringify(baseConfig, null, 4));
         process.exit();
     }
 
-    delete require.cache[require('./config.json')]
+    delete require.cache[require(`${process.cwd()}/config.json`)]
 }

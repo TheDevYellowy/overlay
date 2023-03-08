@@ -1,7 +1,7 @@
 const { Client } = require('tmi.js');
 const api = require('../api/api');
 const eventSub = require('../api/eventSub');
-const channel = require('../config.json').channel;
+const channel = require(`${process.cwd()}/config.json`).channel;
 const { WebSocket, WebSocketServer } = require('ws')
 
 const bits = {

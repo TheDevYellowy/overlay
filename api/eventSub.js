@@ -3,7 +3,7 @@ const { EventEmitter } = require('node:events');
 const Client = require('../classes/Client');
 
 const { post } = require('./api');
-const channel = require('../config.json').channel;
+const channel = require(`${process.cwd()}/config.json`).channel;
 
 const td = new TextDecoder();
 

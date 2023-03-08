@@ -4,7 +4,7 @@ const wait = require('util').promisify(setTimeout);
 const baseURL = 'https://api.twitch.tv/helix/';
 
 async function get(url) {
-    const json = requireUncached('../config.json');
+    const json = requireConfig();
     const fuck = await fetch(`${baseURL}${url}`, {
         method: 'GET',
         headers: {
@@ -23,7 +23,7 @@ async function get(url) {
 }
 
 async function post(url, headers, data) {
-    const json = requireUncached('../config.json');
+    const json = requireConfig();
     headers = {
         "Authorization": `Bearer ${json.token.access_token}`,
         "Client-Id": json.client_id,
@@ -45,13 +45,14 @@ async function post(url, headers, data) {
 }
 
 async function getAccessToken() {
+    const json = requireConfig();
     console.log(`Please click on the link below, whatever was tried to run will try again in 15 seconds. If it succeeded you'll be redirected to twitch`);
     console.log(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${json.client_id}&redirect_uri=${encodeURIComponent(`http://localhost/api`)}&scope=moderator%3Aread%3Afollowers`);
 }
 
-function requireUncached(module) {
-    delete require.cache[require.resolve(module)];
-    return require(module);
+function requireConfig() {
+    delete require.cache[require.resolve(`${process.cwd()}/config.json`)];
+    return require(`${process.cwd()}/config.json`);
 }
 
 module.exports = {get, post}
