@@ -1,3 +1,5 @@
+startup();
+
 const Client = require('./classes/Client');
 const Author = require('./classes/Author');
 const Message = require('./classes/Message');
@@ -60,3 +62,25 @@ client.events.on('follow', (userstate) => {
 });
 
 client.connect();
+
+function startup() {
+    let fs = require('node:fs');
+    let baseConfig = {
+        channel: "",
+        client_id: "",
+        client_secret: "",
+        token: {
+            access_token: "",
+            expires_in: 0,
+            token_type: ""
+        }
+    }
+    try {
+        require('./config.json');
+    } catch (_) {
+        fs.writeFileSync('./config.json', JSON.stringify(baseConfig, null, 4));
+        process.exit();
+    }
+
+    delete require.cache[require('./config.json')]
+}

@@ -43,9 +43,7 @@ app.get('/api', async (req, res) => {
 
     json.token = tokens;
 
-    console.log({ tokens })
-
-    fs.writeFileSync(`./config.json`, JSON.stringify(json));
+    fs.writeFileSync(`./config.json`, JSON.stringify(json, null, 4));
     res.redirect(`https://twitch.tv/moderator/${json.channel}`);
 })
 
