@@ -17,9 +17,9 @@ The current features are below
 - [x] Chatbox
 - [x] Followers
 - [x] Subs
-- [] Resubs
-- [] Gift Subs
-- [] Raids
+- [ ] Resubs
+- [ ] Gift Subs
+- [ ] Raids
 
 # Source Installation
 
