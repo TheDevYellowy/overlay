@@ -14,6 +14,10 @@ app.get('/chatbox', (req, res) => {
     res.render('chatbox.ejs');
 });
 
+app.get('/alerts', (req, res) => {
+    res.render('alerts.ejs');
+})
+
 app.get('/api', async (req, res) => {
     if(req.query.error) return;
     if(!req.query.code) return;

@@ -2,6 +2,7 @@ const Client = require('./classes/Client');
 const Author = require('./classes/Author');
 const Message = require('./classes/Message');
 const Follower = require('./classes/Follower');
+const Subscription = require('./classes/Subscription');
 
 const client = new Client();
 
@@ -35,10 +36,27 @@ client.on('message', async (channel, userstate, content) => {
     if(client.ws.message !== null) client.ws.message.send(JSON.stringify({ event: 'message', badges: urls, username, color, message }));
 });
 
+client.on('subscription', (channel, username, methods, message, userstate) => {
+    const plan = new Subscription(methods).plan;
+    const data = JSON.stringify({
+        event: 'subscription',
+        data: {
+            plan,
+            username
+        }
+    });
+
+    if(client.ws.alerts !== null) client.ws.alerts.send(data);
+});
+
 client.events.on('follow', (userstate) => {
     const user = new Follower(userstate);
 
-    console.log(user);
+    const data = JSON.stringify({
+        event: 'follow',
+        data: user
+    })
+    if(client.ws.alerts !== null) client.ws.alerts.send(data);
 });
 
 client.connect();

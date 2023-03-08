@@ -73,7 +73,8 @@ class EventSub extends EventEmitter {
 
         switch(packet.metadata?.subscription_type) {
             case 'channel.follow':
-                this.emit('follow', packet.payload.subscription.event);
+                this.emit('follow', packet.payload.event);
+                this.debug('[EVENTS] Recieved channel.follow event');
                 break;
         }
     }

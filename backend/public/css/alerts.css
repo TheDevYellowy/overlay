@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Shantell+Sans&display=swap');
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+body {
+    background: transparent;
+}
+
+.alerts {
+    font-family: 'Shantell Sans', sans-serif;
+    text-align: center;
+}
+
+.event {
+    font-size: 96px;
+
+    padding: 0px;
+    margin: 0px;
+}
+
+.data {
+    font-size: 66px;
+
+    padding: 0px;
+    margin: 0px;
+    padding-top: 10px;
+}
+
+.opaque {
+    opacity: 0;
+}
+
+.anim {
+    animation: fade-in 3s;
+}
