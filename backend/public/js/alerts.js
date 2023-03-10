@@ -10,9 +10,10 @@ ws.addEventListener('message', async (msg) => {
     const event = document.getElementsByClassName('event')[0];
     const eData = document.getElementsByClassName('data')[0];
     
-    let username;
-    let plan;
-    let amount;
+    let username = '';
+    let plan = '';
+    let amount = 0;
+    let months = 0;
 
     switch(data.event) {
         case 'follow':
@@ -29,6 +30,16 @@ ws.addEventListener('message', async (msg) => {
 
             event.innerHTML = `New ${plan} Subscription`;
             eData.innerHTML = username;
+
+            await animate(event, eData);
+            break;
+        case 'resub':
+            username = data.data.username;
+            months = data.data.months;
+            plan = data.data.plan;
+
+            event.innerHTML = `${plan} Resub`;
+            eData.innerHTML = `${username} for ${months} months`;
 
             await animate(event, eData);
             break;

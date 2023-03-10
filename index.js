@@ -9,7 +9,6 @@ const Subscription = require('./classes/Subscription');
 const client = new Client();
 
 client.wss.on('listening', () => require('./backend/backend'));
-
 client.wss.on('connection', (socket, _) => {
     socket.once('message', (data, _) => {
         switch(data.toString().toLowerCase()) {
@@ -48,7 +47,21 @@ client.on('subscription', (channel, username, methods, message, userstate) => {
         }
     });
 
-    if(client.ws.alerts !== null) client.ws.alerts.send(data);
+    alert(data);
+});
+
+client.on('resub', (channel, username, months, message, userstate, methods) => {
+    const plan = new Subscription(methods).plan;
+    const data = JSON.stringify({
+        event: 'resub',
+        data: {
+            username,
+            months,
+            plan
+        }
+    });
+
+    alert(data);
 });
 
 client.events.on('follow', (userstate) => {
@@ -57,8 +70,9 @@ client.events.on('follow', (userstate) => {
     const data = JSON.stringify({
         event: 'follow',
         data: user
-    })
-    if(client.ws.alerts !== null) client.ws.alerts.send(data);
+    });
+    
+    alert(data);
 });
 
 client.connect();
@@ -83,4 +97,8 @@ function startup() {
     }
 
     delete require.cache[require(`${process.cwd()}/config.json`)]
+}
+
+function alert(data) {
+    if(client.ws.alerts instanceof WebSocket) client.ws.alerts.send(data);
 }
